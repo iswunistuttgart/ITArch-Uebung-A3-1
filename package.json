@@ -1,0 +1,30 @@
+{
+  "name": "ITArch-QRDisplay",
+  "version": "0.1.0",
+  "private": true,
+  "config": {
+    "msvs_version": 2013
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.14",
+    "webpack": "^3.8.1"
+  },
+  "dependencies": {
+    "kafka-node": "^2.2.3",
+    "kafka-rest": "0.0.5",
+    "kafka-rest-client": "^1.9.5",
+    "node-gyp": "^3.6.2",
+    "qrcode.react": "^0.7.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "socket.io": "^2.0.3",
+    "socket.io-kafka": "0.0.1",
+    "whatwg-fetch": "^2.0.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
