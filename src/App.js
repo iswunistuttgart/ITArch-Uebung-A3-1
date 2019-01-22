@@ -18,55 +18,26 @@ var queueTopic = 'QRCode-Read';
 var bestQRTopic = '';
 var teamTopicPreFix = 'TEAM-';
 var bestTeamTopicPreFix = 'BEST-CODE-CHANNEL-TEAM-';
+var consumerCreated = true;
 function subTopic() {
-    if(queueTopic.length > 0){
+    if(consumerCreated){
+        console.log("Initialisiere Team-Subscriber");
         kafka.consumer("console-consumer-" + Math.round(Math.random() * 10000000000)).join({
             "format": "binary",
             "auto.commit.enable": "false",
             'auto.offset.reset' : 'smallest'
         }, function(err, consumer_instance) {
             CurrentConsumer =consumer_instance;
+            //CurrentConsumerbest = consumer_instance;
             if (err) return console.log("Failed to create instance in consumer group: " + err);
+            subTeam();
 
-            console.log("Consumer instance initialized: " + consumer_instance.toString() + " TOPIC: " + queueTopic);
-            var stream = consumer_instance.subscribe(queueTopic);
-            stream.on('data', function(msgs) {
-                console.log("YEAAA message");
-                for(var i = 0; i < msgs.length; i++){
-                    //console.log(msgs[i].value.toString('utf8'));
-                    var jsonObject = JSON.parse(msgs[i].value);
-                    if (THECOMPONENT !== undefined) THECOMPONENT.setState({
-                        value: "" + jsonObject.QRCode,
-                        speed: jsonObject.Speed
-                    })
-                }
-
-
-            });
-
-            stream.on('error', function(err) {
-                console.log("Consumer instance reported an error: " + err);
-                console.log("Attempting to shut down consumer instance...");
-                consumer_instance.shutdown(function logShutdown(err) {
-                    if (err)
-                        console.log("Error while shutting down: " + err);
-                    else
-                        console.log("Shutdown cleanly.");}
-                );
-            });
-            stream.on('end', function() {
-                console.log("Consumer stream closed.");
-            });
-
-            // Events are also emitted by the parent consumer_instance, so you can either consume individual streams separately
-            // or multiple streams with one callback. Here we'll just demonstrate the 'end' event.
-            consumer_instance.on('end', function() {
-                console.log("Consumer instance closed.");
-            });
         });
 
 
         // Consumer for best Messsage
+
+        console.log("Initialisiere BestQR-Subscriber");
         kafka.consumer("console-consumer-" + Math.round(Math.random() * 10000000000)).join({
             "format": "binary",
             "auto.commit.enable": "false",
@@ -74,58 +45,123 @@ function subTopic() {
         }, function (err, consumer_instance) {
             CurrentConsumerbest = consumer_instance;
             if (err) return console.log("Failed to create instance in consumer group: " + err);
-
-            console.log("Consumer instance initialized: " + consumer_instance.toString() + " TOPIC: " + bestQRTopic);
-            var stream = consumer_instance.subscribe(bestQRTopic);
-            stream.on('data', function (msgs) {
-                console.log("YEAAA message");
-                for (var i = 0; i < msgs.length; i++) {
-                    //console.log(msgs[i].value.toString('utf8'));
-                    var jsonObject = JSON.parse(msgs[i].value);
-                    if (THECOMPONENT !== undefined) THECOMPONENT.setState({
-                        bestcode: "" + jsonObject.QRCode,
-                        bestTeam: jsonObject.Team,
-                        bestSpeed: jsonObject.Speed
-                    })
-                }
-
-
-            });
-
-            stream.on('error', function (err) {
-                console.log("Consumer instance reported an error: " + err);
-                console.log("Attempting to shut down consumer instance...");
-                consumer_instance.shutdown(function logShutdown(err) {
-                        if (err)
-                            console.log("Error while shutting down: " + err);
-                        else
-                            console.log("Shutdown cleanly.");
-                    }
-                );
-
-                new Promise(subTopic);
-
-            });
-            stream.on('end', function () {
-                console.log("Consumer stream closed.");
-            });
-
-            // Events are also emitted by the parent consumer_instance, so you can either consume individual streams separately
-            // or multiple streams with one callback. Here we'll just demonstrate the 'end' event.
-            consumer_instance.on('end', function () {
-                console.log("Consumer instance closed.");
-            });
+            subBest();
         });
+
+        consumerCreated = false;
+    }else{
+        subTeam();
+        subBest();
     }
 
+
+
+
+
+}
+function subTeam(){
+
+    console.log("Consumer TEAM  instance initialized: " + CurrentConsumer.toString() + " TOPIC: " + queueTopic);
+    var stream = CurrentConsumer.subscribe(queueTopic);
+    stream.on('data', function(msgs) {
+        console.log("YEAAA message TEAM : " + queueTopic);
+        for(var i = 0; i < msgs.length; i++){
+            //console.log(msgs[i].value.toString('utf8'));
+            var jsonObject = JSON.parse(msgs[i].value);
+            if (THECOMPONENT !== undefined) THECOMPONENT.setState({
+                value: "" + jsonObject.QRCode,
+                speed: jsonObject.Speed
+            })
+        }
+
+
+    });
+
+    stream.on('error', function(err) {
+        console.log("Consumer TEAM instance reported an error: " + err);
+        console.log("Attempting TEAM to shut down consumer instance...");
+        setTimeout(function() {
+            // rest of code here
+            //subTeam();
+        }, 1000);
+
+    });
+    stream.on('end', function() {
+        console.log("Consumer TEAM stream closed.");
+        setTimeout(function() {
+            // rest of code here
+            subTeam();
+        }, 5000);
+    });
+
+    // Events are also emitted by the parent consumer_instance, so you can either consume individual streams separately
+    // or multiple streams with one callback. Here we'll just demonstrate the 'end' event.
+    CurrentConsumer.on('end', function() {
+        console.log("Consumer instance closed.");
+    });
 }
 
+function  subBest(){
+
+    console.log("Consumer BEST instance initialized: " + CurrentConsumerbest.toString() + " TOPIC: " + bestQRTopic);
+    var stream = CurrentConsumerbest.subscribe(bestQRTopic);
+    stream.on('data', function (msgs) {
+        console.log("YEAAA BEST message");
+        for (var i = 0; i < msgs.length; i++) {
+            //console.log(msgs[i].value.toString('utf8'));
+            var jsonObject = JSON.parse(msgs[i].value);
+            if (THECOMPONENT !== undefined) THECOMPONENT.setState({
+                bestcode: "" + jsonObject.QRCode,
+                bestTeam: jsonObject.Team,
+                bestSpeed: jsonObject.Speed
+            })
+        }
+
+
+    });
+
+    stream.on('error', function (err) {
+        console.log("Consumer BEST instance reported an error: " + err);
+        console.log("Attempting BEST to shut down consumer instance...");
+        CurrentConsumerbest.shutdown(function logShutdown(err) {
+                if (err)
+                    console.log("Error BEST while shutting down: " + err);
+                else
+                    console.log("Shutdown BEST cleanly.");
+
+            }
+
+        );
+        setTimeout(function() {
+            // rest of code here
+            //subBest();
+        }, 5000);
+
+
+        //new Promise(subTopic);
+
+    });
+    stream.on('end', function () {
+        console.log("Consumer BEST stream closed.");
+        setTimeout(function() {
+            // rest of code here
+            subBest();
+        }, 5000);
+    });
+
+    // Events are also emitted by the parent consumer_instance, so you can either consume individual streams separately
+    // or multiple streams with one callback. Here we'll just demonstrate the 'end' event.
+    CurrentConsumerbest.on('end', function () {
+        console.log("Consumer instance closed.");
+    });
+}
 class App extends Component {
     code = "";
 
     constructor(props) {
         super(props);
         THECOMPONENT = this;
+        console.log("Initialisiere die Homepage");
         subTopic();
         this.state = {
             value: this.code,
@@ -180,19 +216,6 @@ class App extends Component {
     }
 
     shutdownSubsAndResub(){
-        if(CurrentConsumer)CurrentConsumer.shutdown(function logShutdown(err) {
-            if (err)
-                console.log("Error while shutting down: " + err);
-            else
-                console.log("Shutdown cleanly.");}
-        );
-        if(CurrentConsumerbest)CurrentConsumerbest.shutdown(function logShutdown(err) {
-                if (err)
-                    console.log("Error while shutting down: " + err);
-                else
-                    console.log("Shutdown cleanly.");
-            }
-        );
         subTopic();
     }
 
