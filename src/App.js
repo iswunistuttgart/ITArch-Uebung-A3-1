@@ -11,7 +11,7 @@ import 'kafka-rest';
 
 
 var KafkaRest = require('kafka-rest');
-var kafka = new KafkaRest({ 'url': 'http://193.196.36.135:8082' });
+var kafka = new KafkaRest({ 'url': 'http://193.196.37.135:8082' });
 var THECOMPONENT;
 var CurrentConsumer, CurrentConsumerbest;
 var queueTopic = 'QRCode-Read';
