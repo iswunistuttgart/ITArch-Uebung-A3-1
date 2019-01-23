@@ -61,7 +61,7 @@ function subTopic() {
 }
 function subTeam(){
 
-    console.log("Consumer TEAM  instance initialized: " + CurrentConsumer.toString() + " TOPIC: " + queueTopic);
+    //console.log("Consumer TEAM  instance initialized: " + CurrentConsumer.toString() + " TOPIC: " + queueTopic);
     var stream = CurrentConsumer.subscribe(queueTopic);
     stream.on('data', function(msgs) {
         console.log("YEAAA message TEAM : " + queueTopic);
@@ -103,7 +103,7 @@ function subTeam(){
 
 function  subBest(){
 
-    console.log("Consumer BEST instance initialized: " + CurrentConsumerbest.toString() + " TOPIC: " + bestQRTopic);
+    //console.log("Consumer BEST instance initialized: " + CurrentConsumerbest.toString() + " TOPIC: " + bestQRTopic);
     var stream = CurrentConsumerbest.subscribe(bestQRTopic);
     stream.on('data', function (msgs) {
         console.log("YEAAA BEST message");
