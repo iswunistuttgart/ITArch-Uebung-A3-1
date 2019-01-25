@@ -31,10 +31,19 @@ function subTopic() {
         var jsonObject = JSON.parse(response.entity.toString());
         console.log('response: ', jsonObject.qrcode);
 
-        if (THECOMPONENT !== undefined) THECOMPONENT.setState({
-            value: "" + jsonObject.qrcode,
-            speed: jsonObject.speed
-        })
+        if (THECOMPONENT !== undefined)  THECOMPONENT.setState({
+                value: "" + jsonObject.qrcode,
+                speed: jsonObject.speed
+            });
+
+        //prüfe und kennzeichne ob Team existiert
+        if (jsonObject.team === "Kein TEAM" && jsonObject.qrcode === "Kein CODE"){
+            console.log('Team not found');
+            document.getElementById("TeamInput").className = 'App-input warning';
+        } else {
+            console.log('Team found');
+            document.getElementById("TeamInput").className = 'App-input normal';
+        }
     });
     new Promise(function () {
         setTimeout(subTopic, 2000);
@@ -67,7 +76,7 @@ class App extends Component {
                     <h1 className="App-title">Welcome to QRCode display service</h1>
                 </header>
                 <p>
-                    Gib hier deinen Team-Namen ein: <input value={this.state.InputFieldvalue}
+                    Gib hier deinen Team-Namen ein: <input id="TeamInput" className="App-input normal" value={this.state.InputFieldvalue}
                                                            onChange={this.updateInputValue}/>
                 </p>
 
