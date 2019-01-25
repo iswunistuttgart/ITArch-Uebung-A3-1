@@ -12,6 +12,7 @@ var ServerIP = 'http://193.196.37.135:8080';
 var THECOMPONENT;
 var queueTopic = 'QRCode-Read';
 function subTopic() {
+<<<<<<< HEAD
     rest(ServerIP + '/getBestCode/').then(function (response) {
         console.log('response: ', response.entity);
         var jsonObject = JSON.parse(response.entity.toString());
@@ -22,6 +23,60 @@ function subTopic() {
                 bestTeam: jsonObject.team,
                 bestSpeed: jsonObject.speed
             });
+=======
+    if(consumerCreated){
+        console.log("Initialisiere Team-Subscriber");
+        kafka.consumer("console-consumer-" + Math.round(Math.random() * 10000000000)).join({
+            "format": "binary",
+            "auto.commit.enable": "false",
+            'auto.offset.reset' : 'smallest'
+        }, function(err, consumer_instance) {
+            CurrentConsumer =consumer_instance;
+            //CurrentConsumerbest = consumer_instance;
+            if (err) return console.log("Failed to create instance in consumer group: " + err);
+            subTeam();
+
+        });
+
+
+        // Consumer for best Messsage
+
+        console.log("Initialisiere BestQR-Subscriber");
+        kafka.consumer("console-consumer-" + Math.round(Math.random() * 10000000000)).join({
+            "format": "binary",
+            "auto.commit.enable": "false",
+            'auto.offset.reset': 'smallest'
+        }, function (err, consumer_instance) {
+            CurrentConsumerbest = consumer_instance;
+            if (err) return console.log("Failed to create instance in consumer group: " + err);
+            subBest();
+        });
+
+        consumerCreated = false;
+    }else{
+        subTeam();
+        subBest();
+    }
+
+
+
+
+
+}
+function subTeam(){
+
+    //console.log("Consumer TEAM  instance initialized: " + CurrentConsumer.toString() + " TOPIC: " + queueTopic);
+    var stream = CurrentConsumer.subscribe(queueTopic);
+    stream.on('data', function(msgs) {
+        console.log("YEAAA message TEAM : " + queueTopic);
+        for(var i = 0; i < msgs.length; i++){
+            //console.log(msgs[i].value.toString('utf8'));
+            var jsonObject = JSON.parse(msgs[i].value);
+            if (THECOMPONENT !== undefined) THECOMPONENT.setState({
+                value: "" + jsonObject.QRCode,
+                speed: jsonObject.Speed
+            })
+>>>>>>> 689a169dbc8f6abcf389b4bb8f1848dfbab4b6fd
         }
     });
     rest(ServerIP + '/getQRCode/' + THECOMPONENT.state.InputFieldvalue).then(function (response) {
@@ -38,6 +93,69 @@ function subTopic() {
         setTimeout(subTopic, 2000);
     });
 
+<<<<<<< HEAD
+=======
+    // Events are also emitted by the parent consumer_instance, so you can either consume individual streams separately
+    // or multiple streams with one callback. Here we'll just demonstrate the 'end' event.
+    CurrentConsumer.on('end', function() {
+        console.log("Consumer instance closed.");
+    });
+}
+
+function  subBest(){
+
+    //console.log("Consumer BEST instance initialized: " + CurrentConsumerbest.toString() + " TOPIC: " + bestQRTopic);
+    var stream = CurrentConsumerbest.subscribe(bestQRTopic);
+    stream.on('data', function (msgs) {
+        console.log("YEAAA BEST message");
+        for (var i = 0; i < msgs.length; i++) {
+            //console.log(msgs[i].value.toString('utf8'));
+            var jsonObject = JSON.parse(msgs[i].value);
+            if (THECOMPONENT !== undefined) THECOMPONENT.setState({
+                bestcode: "" + jsonObject.QRCode,
+                bestTeam: jsonObject.Team,
+                bestSpeed: jsonObject.Speed
+            })
+        }
+
+
+    });
+
+    stream.on('error', function (err) {
+        console.log("Consumer BEST instance reported an error: " + err);
+        console.log("Attempting BEST to shut down consumer instance...");
+        CurrentConsumerbest.shutdown(function logShutdown(err) {
+                if (err)
+                    console.log("Error BEST while shutting down: " + err);
+                else
+                    console.log("Shutdown BEST cleanly.");
+
+            }
+
+        );
+        setTimeout(function() {
+            // rest of code here
+            //subBest();
+        }, 5000);
+
+
+        //new Promise(subTopic);
+
+    });
+    stream.on('end', function () {
+        console.log("Consumer BEST stream closed.");
+        setTimeout(function() {
+            // rest of code here
+            subBest();
+        }, 5000);
+    });
+
+    // Events are also emitted by the parent consumer_instance, so you can either consume individual streams separately
+    // or multiple streams with one callback. Here we'll just demonstrate the 'end' event.
+    CurrentConsumerbest.on('end', function () {
+        console.log("Consumer instance closed.");
+    });
+>>>>>>> 689a169dbc8f6abcf389b4bb8f1848dfbab4b6fd
 }
 class App extends Component {
     code = "";
