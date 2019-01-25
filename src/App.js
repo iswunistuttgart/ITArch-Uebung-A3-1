@@ -72,7 +72,9 @@ class App extends Component {
         return (
             <div className="App">
                 <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
+                    <a href="https://www.isw.uni-stuttgart.de/" target="_blank">
+                        <img src={logo} className="App-logo" alt="logo"/>
+                    </a>
                     <h1 className="App-title">Welcome to QRCode display service</h1>
                 </header>
                 <p>

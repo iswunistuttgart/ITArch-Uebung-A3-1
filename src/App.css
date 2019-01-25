@@ -53,39 +53,39 @@
     left-margin: 10px;
     padding: 5px;
     border-radius: 5px;
-    box-shadow: 0 0 0 rgba(255, 0, 0, 0);
+    box-shadow: 0 0 0 rgba(254, 0, 0, 0);
 }
 .App-input.normal{
     border: 2px solid green;
     animation: none;
 }
 .App-input.warning {
-    border: 2px solid red;
+    border: 2px solid rgb(254,0,0);
     animation: pulse 2s infinite;
 }
 
 @-webkit-keyframes pulse {
     0% {
-        -webkit-box-shadow: 0 0 0 0 rgba(255,0,0,0.4);
+        -webkit-box-shadow: 0 0 0 0 rgba(254,0,0,0.4);
     }
     70% {
-        -webkit-box-shadow: 0 0 0 10px rgba(255,0,0,0);
+        -webkit-box-shadow: 0 0 0 10px rgba(254,0,0,0);
     }
     100% {
-        -webkit-box-shadow: 0 0 0 0 rgba(255,0,0,0);
+        -webkit-box-shadow: 0 0 0 0 rgba(254,0,0,0);
     }
 }
 @keyframes pulse {
     0% {
-        -moz-box-shadow: 0 0 0 0 rgba(255,0,0,0.4);
-        box-shadow: 0 0 0 0 rgba(255,0,0,0.4);
+        -moz-box-shadow: 0 0 0 0 rgba(254,0,0,0.4);
+        box-shadow: 0 0 0 0 rgba(254,0,0,0.4);
     }
     70% {
-        -moz-box-shadow: 0 0 0 10px rgba(255,0,0,0);
-        box-shadow: 0 0 0 10px rgba(255,0,0,0);
+        -moz-box-shadow: 0 0 0 10px rgba(254,0,0,0);
+        box-shadow: 0 0 0 10px rgba(254,0,0,0);
     }
     100% {
-        -moz-box-shadow: 0 0 0 0 rgba(255,0,0,0);
-        box-shadow: 0 0 0 0 rgba(255,0,0,0);
+        -moz-box-shadow: 0 0 0 0 rgba(254,0,0,0);
+        box-shadow: 0 0 0 0 rgba(254,0,0,0);
     }
 }
