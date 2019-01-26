@@ -1,15 +1,16 @@
 .App {
     text-align: center;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
 }
-
 .App-logo {
-    #animation: App-logo-spin infinite 20s linear;
     height: 80px;
 }
 
 .App-header {
     background-color: #222;
-    height: 150px;
+    height: 140px;
     padding: 20px;
     color: white;
 }
@@ -22,28 +23,20 @@
     font-size: large;
 }
 
-.App-QRField {
-    #animation: App-logo-spin infinite 20s linear;
-    #height: 512px;
-    vertical-align: middle;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    align: top;
+.App-flex{
+    background-color: rgba(255,255,255,0.7);
+    width: 50vw;
+    padding: 0 10px 10px 10px;
+    margin: auto;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.App-flex.itemQR{
+    height: 128px;
+    z-index: 2;
+    align-items: center;
 }
-
-
-
 /*class for animated TeamInput*/
 .App-input {
     font-family: sans-serif;
@@ -133,6 +126,6 @@
 
 /* back, initially hidden pane */
 .back {
-    margin: 150px 0 0 0;
+    margin: 100px 0 0 0;
     transform: rotateY(180deg);
 }
