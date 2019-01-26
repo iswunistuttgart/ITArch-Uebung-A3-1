@@ -4,6 +4,7 @@ import medal from './medal.png';
 import './App.css';
 import QRCode from 'qrcode.react';
 import 'whatwg-fetch';
+// eslint-disable-next-line
 import particlesJS from 'particles.js'
 
 var rest = require('rest');
@@ -99,7 +100,7 @@ class App extends Component {
 
 
                 <header className="App-header">
-                    <a href="https://www.isw.uni-stuttgart.de/" target="_blank">
+                    <a href="https://www.isw.uni-stuttgart.de/" target="_blank" rel="noopener noreferrer">
                         <img src={logo} className="App-logo" alt="logo"/>
                     </a>
                     <h1 className="App-title">Welcome to QRCode display service</h1>
@@ -136,7 +137,7 @@ class App extends Component {
                         Geschwindigkeit von: {this.state.bestSpeed * 100}%</p>
                     <div className="App-flex itemQR" title="QR-Code des Highscores, erziele eine höhere Geschwindigkeit und verdiene eine Medaille!">
                         <QRCode value={this.state.bestcode} size={0.5 * 256}/>
-                        <img id="MedalPic" src={medal} alt="Medallie"/>
+                        <img id="MedalPic" src={medal} alt="Medallie" style={{display: "none"}}/>
                     </div>
                 </div>
             </div>
