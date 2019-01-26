@@ -104,7 +104,7 @@ class App extends Component {
 
 
                 <p className="App-QRField">
-                    Aktuell bester empfangener QRCode kommt von Team: {this.state.bestTeam} mit der Geschwindigkeit
+                    'Aktuell bester empfangener QRCode kommt von Team:&nbsp;<b> {this.state.bestTeam} </b> &nbsp;mit der Geschwindigkeit
                     von: {this.state.bestSpeed * 100}%
                 </p>
                 <p className="App-QRField">
