@@ -84,14 +84,24 @@ class App extends Component {
 
 
                 <p className="App-intro">
-                    Der letzte erhaltene QRCode: {this.state.value}
+                    Der letzte erhaltene QRCode:
                 </p>
                 <p className="App-QRField">
                     Mit der aktuellen Geschwindigkeit von: {this.state.speed * 100}%
                 </p>
-                <p className="App-QRField">
-                    <QRCode value={this.state.value} size={1.5 * 256}/>
-                </p>
+
+                <div className="flip-container">
+                <div className="flipper">
+                    <div className="front">
+                        <QRCode value={this.state.value} size={1.5 * 256}/>
+                    </div>
+                    <div className="back">
+                        <p>Im QR-Code enthaltene Nachricht:</p>
+                        <p><b>{this.state.value}</b></p>
+                    </div>
+                </div>
+                </div>
+
 
                 <p className="App-QRField">
                     Aktuell bester empfangener QRCode kommt von Team: {this.state.bestTeam} mit der Geschwindigkeit
