@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import logo from './ISW-Logo.jpg';
+import medal from './medal.png';
 import './App.css';
 import QRCode from 'qrcode.react';
 import 'whatwg-fetch';
@@ -37,7 +38,7 @@ function subTopic() {
             speed: jsonObject.speed
         });
 
-        //prüfe und kennzeichne ob Team existiert
+        //check and feedback of Team exists
         if (jsonObject.team === "Kein TEAM" && jsonObject.qrcode === "Kein CODE") {
             console.log('Team not found');
             document.getElementById("TeamInput").className = 'App-input warning';
@@ -46,6 +47,19 @@ function subTopic() {
             document.getElementById("TeamInput").className = 'App-input normal';
         }
     });
+
+    //check if Team is best Team
+    var medalPic = document.getElementById("MedalPic");
+    if (medalPic != null) {
+        if (THECOMPONENT.state.InputFieldvalue === THECOMPONENT.state.bestTeam) {
+            console.log('Logged in Team is best');
+            medalPic.style.display = "flex";
+        } else {
+            medalPic.style.display = "none";
+        }
+    }
+
+
     new Promise(function () {
         setTimeout(subTopic, 2000);
     });
@@ -81,7 +95,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <div id="particles-js"></div>
+                <div id="particles-js"/>
 
 
                 <header className="App-header">
@@ -121,6 +135,7 @@ class App extends Component {
                         Geschwindigkeit von: {this.state.bestSpeed * 100}%</p>
                     <div className="App-flex itemQR">
                         <QRCode value={this.state.bestcode} size={0.5 * 256}/>
+                        <img id="MedalPic" src={medal} alt="Medallie"/>
                     </div>
                 </div>
             </div>
