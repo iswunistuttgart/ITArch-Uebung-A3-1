@@ -110,7 +110,8 @@ class App extends Component {
                     <p className="App-intro">
                         Gib hier deinen Team-Namen ein: <input id="TeamInput" className="App-input normal"
                                                                value={this.state.InputFieldvalue}
-                                                               onChange={this.updateInputValue}/>
+                                                               onChange={this.updateInputValue}
+                                                               title="Teamname muss den in der Python und Java Applikation gesetzten entsprechen (Case Sensitiv)."/>
                     </p>
 
 
@@ -133,7 +134,7 @@ class App extends Component {
 
                     <p>Aktuell bester empfangener QRCode kommt von Team:&nbsp;<b> {this.state.bestTeam} </b> mit der
                         Geschwindigkeit von: {this.state.bestSpeed * 100}%</p>
-                    <div className="App-flex itemQR">
+                    <div className="App-flex itemQR" title="QR-Code des Highscores, erziele eine höhere Geschwindigkeit und verdiene eine Medaille!">
                         <QRCode value={this.state.bestcode} size={0.5 * 256}/>
                         <img id="MedalPic" src={medal} alt="Medallie"/>
                     </div>
