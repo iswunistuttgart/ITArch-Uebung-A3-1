@@ -5,23 +5,26 @@
     width: 100vw;
 }
 .App-logo {
-    height: 80px;
+    height: 10vh;
 }
 
 .App-header {
     background-color: #222;
-    height: 140px;
-    padding: 20px;
+    height: 14vh;
+    padding: 4vh;
     color: white;
 }
 
 .App-title {
-    font-size: 1.5em;
+    font-size: 2.5vh;
 }
 
 .App-intro {
+    margin: 2vh 0 0 0;
     font-size: large;
 }
+
+
 
 .App-flex{
     background-color: rgba(255,255,255,0.7);
@@ -30,13 +33,18 @@
     margin: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-}
-.App-flex.itemQR{
-    height: 128px;
-    z-index: 2;
     align-items: center;
 }
+.App-flex.itemQR{
+    height: 14vh;
+    z-index: 2;
+}
+.App-flex.itemQR>canvas {
+    position: relative !important;
+}
+
+
+
 /*class for animated TeamInput*/
 .App-input {
     font-family: sans-serif;
@@ -95,8 +103,8 @@
 }
 
 .flip-container, .front, .back {
-    width: 384px;
-    height: 384px;
+    width: 30vh;
+    height: 30vh;
 }
 
 /* flip speed goes here */
@@ -125,6 +133,6 @@
 
 /* back, initially hidden pane */
 .back {
-    margin: 100px 0 0 0;
+    margin: 10vh 0 0 0;
     transform: rotateY(180deg);
 }

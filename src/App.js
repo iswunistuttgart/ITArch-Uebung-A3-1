@@ -49,16 +49,18 @@ function subTopic() {
         }
     });
 
-    //check if Team is best Team
-    var medalPic = document.getElementById("MedalPic");
-    if (medalPic != null) {
+    //check if Team is best Team and give Medal to QRCode
+    if (document.getElementById("QR2") != null) {
         if (THECOMPONENT.state.InputFieldvalue === THECOMPONENT.state.bestTeam) {
             console.log('Logged in Team is best');
-            medalPic.style.display = "flex";
+            document.getElementById("QR2").style.display = "none";
+            document.getElementById("Medal").style.display = "flex"
         } else {
-            medalPic.style.display = "none";
+            document.getElementById("QR2").style.display = "flex";
+            document.getElementById("Medal").style.display = "none";
         }
     }
+
 
 
     new Promise(function () {
@@ -67,6 +69,12 @@ function subTopic() {
 
 
 }
+
+//Resize QRCodes when Window ist resized
+window.onresize = function(event) {
+    THECOMPONENT.state.sizeQR1=Math.max(document.documentElement.clientHeight, window.innerHeight || 0)*0.3;
+    THECOMPONENT.state.sizeQR2=Math.max(document.documentElement.clientHeight, window.innerHeight || 0)*0.14;
+};
 
 
 class App extends Component {
@@ -82,7 +90,9 @@ class App extends Component {
             speed: 0,
             bestcode: '',
             bestTeam: '',
-            bestSpeed: 0
+            bestSpeed: 0,
+            sizeQR1: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)*0.3,
+            sizeQR2: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)*0.14,
         };
         subTopic();
 
@@ -123,7 +133,7 @@ class App extends Component {
                     <div className="flip-container">
                         <div className="flipper">
                             <div className="front">
-                                <QRCode value={this.state.value} size={1.5 * 256}/>
+                                <QRCode value={this.state.value} size={parseInt(this.state.sizeQR1,10)} />
                             </div>
                             <div className="back">
                                 <p>Im QR-Code enthaltene Nachricht:</p>
@@ -135,10 +145,13 @@ class App extends Component {
 
                     <p>Aktuell bester empfangener QRCode kommt von Team:&nbsp;<b> {this.state.bestTeam} </b> mit der
                         Geschwindigkeit von: {this.state.bestSpeed * 100}%</p>
-                    <div className="App-flex itemQR" title="QR-Code des Highscores, erziele eine höhere Geschwindigkeit und verdiene eine Medaille!">
-                        <QRCode value={this.state.bestcode} size={0.5 * 256}/>
-                        <img id="MedalPic" src={medal} alt="Medallie" style={{display: "none"}}/>
+                    <div className="App-flex itemQR" id ="QR2" title="QR-Code des Highscores, erziele eine höhere Geschwindigkeit und verdiene eine Medaille!">
+                        <QRCode value={this.state.bestcode} size={parseInt(this.state.sizeQR2,10)}/>
                     </div>
+                    <div className="App-flex itemQR" id="Medal" title="Glückwunsch!" style={{"display":"none"}}>
+                        <img id="MedalPic" src={medal} alt="Medaille"/>
+                    </div>
+
                 </div>
             </div>
 
