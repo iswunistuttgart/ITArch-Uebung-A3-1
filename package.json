@@ -14,7 +14,8 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "rest": "^2.0.0",
-    "whatwg-fetch": "^2.0.4"
+    "whatwg-fetch": "^2.0.4",
+    "particles.js": "^2.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
