@@ -8,7 +8,7 @@ import 'whatwg-fetch';
 import particlesJS from 'particles.js'
 
 var rest = require('rest');
-var ServerIP = 'http://193.196.39.80:8080';
+var ServerIP = 'http://193.196.38.196:8080';
 
 
 var THECOMPONENT;
